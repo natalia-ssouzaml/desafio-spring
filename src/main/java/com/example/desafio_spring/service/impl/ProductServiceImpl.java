@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.NotActiveException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -19,10 +20,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        Optional<List<Product>> products = productRepo.getAllProducts();
-        if(products.isEmpty()){
-            throw new NotFoundException("Product not found");
+        return productRepo.getAllProducts();
+    }
+
+
+    //3. Retornar uma lista de produtos filtrados por categoria.
+    @Override
+    public List<Product> filterByCategory(String category) {
+        List<Product> products = getAllProducts();
+        List<Product> optionalProducts = products.stream()
+                .filter(p -> p.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+
+        if (optionalProducts.isEmpty()) {
+            throw new NotFoundException("There are any products in this category: " + category);
         }
-        return products.get();
+
+        return optionalProducts;
     }
 }

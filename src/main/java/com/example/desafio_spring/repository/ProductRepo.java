@@ -1,5 +1,6 @@
 package com.example.desafio_spring.repository;
 
+import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.exception.ReadingFailException;
 import com.example.desafio_spring.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,14 +17,12 @@ public class ProductRepo {
 
     private String linkFile = "src/main/resources/products.json";
 
-    public Optional<List<Product>> getAllProducts() {
-
+    public List<Product> getAllProducts() {
         ObjectMapper mapper = new ObjectMapper();
-
-        try{
-            return Optional.of(Arrays.asList(mapper.readValue(new File(linkFile), Product[].class)));
-        } catch (IOException ex ){
-            throw new ReadingFailException(ex.getMessage());
+        try {
+            return Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
+        } catch (Exception e) {
+            throw new NotFoundException("Empty product list");
         }
     }
 }
