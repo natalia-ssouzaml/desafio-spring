@@ -1,11 +1,15 @@
 package com.example.desafio_spring.repository;
 
+import com.example.desafio_spring.exception.CreationFailureException;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,5 +25,24 @@ public class ProductRepo {
         } catch (Exception e) {
             throw new NotFoundException("Empty product list");
         }
+    }
+
+    public Product createProduct(Product product) {
+            ObjectMapper mapper = new ObjectMapper();
+
+            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+
+            // Adicionar novo veículo
+            List<Product> productList = getAllProducts();
+            productList = new ArrayList<>(productList);
+            productList.add(product);
+
+            try {
+                writer.writeValue(new File(linkFile), productList);
+            } catch (Exception ex) {
+                throw new CreationFailureException("Invalid creation attributes");
+            }
+
+            return product;
     }
 }

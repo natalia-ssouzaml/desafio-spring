@@ -18,6 +18,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
 
+    @Override
+    public Product createProduct(Product product) {
+        return productRepo.createProduct(product);
+    }
+
     /**
      * [Descrição do que o método faz]
      *

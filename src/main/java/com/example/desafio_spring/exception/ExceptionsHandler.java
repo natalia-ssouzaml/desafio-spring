@@ -21,4 +21,16 @@ public class ExceptionsHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CreationFailureException.class)
+    public ResponseEntity<ExceptionDetails> handlerNotFoundException(CreationFailureException ex){
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Invalid creation attributes")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();//Retorna um objeto do tipo ExceptionDetails
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
 }
