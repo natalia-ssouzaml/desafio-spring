@@ -13,4 +13,7 @@ public interface ProductService {
     List<Product>filterByFreeShippingAndPrestige(String prestige);
     List<Product>categoryAndFreeShippingOrdered(String category, String orderParam);
 
+    List<Product>freeShippingAndPrestigeOrdered(String prestige, String orderParam);
+
+
 }

@@ -7,7 +7,6 @@ import com.example.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +18,14 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
 
+    /**
+     * [Descrição do que o método faz]
+     *
+     * @return List<Product>
+     */
     @Override
     public List<Product> getAllProducts() {
+
         return productRepo.getAllProducts();
     }
 
@@ -69,7 +74,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> categoryAndFreeShippingOrdered(String category, String orderParam) {
         List<Product> products = filterByCategoryAndFreeShipping(category);
+        return orderType(orderParam, products);
+    }
 
+    @Override
+    public List<Product> freeShippingAndPrestigeOrdered(String prestige, String orderParam) {
+        List<Product> products = filterByFreeShippingAndPrestige(prestige);
+        return orderType(orderParam, products);
+    }
+
+    private List<Product> orderType(String orderParam, List<Product> products) {
         switch (orderParam) {
             case "asc":
                 return products.stream().sorted(comparing(Product::getName)).collect(Collectors.toList());
@@ -79,9 +93,10 @@ public class ProductServiceImpl implements ProductService {
                 return products.stream().sorted(comparing(Product::getPrice)).collect(Collectors.toList());
             case "highprice":
                 return products.stream().sorted(comparing(Product::getPrice).reversed()).collect(Collectors.toList());
-            default: throw new NotFoundException("Invalid ordering");
+            default:
+                throw new NotFoundException("Invalid ordering");
         }
-
     }
+
 
 }

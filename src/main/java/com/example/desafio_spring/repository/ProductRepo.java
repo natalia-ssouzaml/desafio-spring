@@ -1,16 +1,13 @@
 package com.example.desafio_spring.repository;
 
 import com.example.desafio_spring.exception.NotFoundException;
-import com.example.desafio_spring.exception.ReadingFailException;
 import com.example.desafio_spring.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ProductRepo {
