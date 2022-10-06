@@ -1,0 +1,9 @@
+[ {
+  "customerId" : 1,
+  "name" : "Cristiano Ronaldo",
+  "cpf" : "09987612344",
+  "city" : "São Paulo",
+  "state" : "SP",
+  "email" : "cristiano@gmail.com",
+  "password" : "cristiano123"
+} ]

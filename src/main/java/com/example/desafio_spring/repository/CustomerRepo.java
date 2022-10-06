@@ -2,7 +2,7 @@ package com.example.desafio_spring.repository;
 
 import com.example.desafio_spring.exception.CreationFailureException;
 import com.example.desafio_spring.exception.NotFoundException;
-import com.example.desafio_spring.model.Product;
+import com.example.desafio_spring.model.Customer;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -14,46 +14,46 @@ import java.util.Arrays;
 import java.util.List;
 
 @Repository
-public class ProductRepo {
+public class CustomerRepo {
 
-    private String linkFile = "src/main/resources/products.json";
+    private String linkFile = "src/main/resources/customers.json";
 
     /**
-     * Metodo responsavel por retornar uma lista com todos os produtos.
-     * @return List<Product>
+     * Metodo responsavel por retornar uma lista com todos os clientes.
+     * @return List<Customer>
      */
-    public List<Product> getAllProducts() {
+    public List<Customer> getAllCustomers() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
+            return Arrays.asList(mapper.readValue(new File(linkFile), Customer[].class));
         } catch (Exception e) {
             throw new NotFoundException("Empty product list");
         }
     }
 
     /**
-     * Metodo responsavel por salvar um novo produto.
-     * @param product -> novo produto adicionado.
-     * @return Product -> novo produto criado.
+     * Metodo responsavel por salvar um novo cliente.
+     * @param customer -> novo cliente adicionado.
+     * @return Customer -> novo cliente criado.
      */
-    public Product createProduct(Product product) {
+    public Customer createCustomer(Customer customer) {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
-        List<Product> productList = getAllProducts();
-        productList = new ArrayList<>(productList);
-        product.setProductId((long) (productList.size() + 1));
-        productList.add(product);
+        List<Customer> customerList = getAllCustomers();
+        customerList = new ArrayList<>(customerList);
+        customer.setCustomerId((long) (customerList.size() + 1));
+        customerList.add(customer);
 
         try {
-            writer.writeValue(new File(linkFile), productList);
+            writer.writeValue(new File(linkFile), customerList);
         }
         catch (Exception ex) {
             throw new CreationFailureException("Invalid creation attributes");
         }
 
 
-        return product;
+        return customer;
     }
 }
