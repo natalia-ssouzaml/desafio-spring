@@ -1,12 +1,16 @@
 package com.example.desafio_spring.service.impl;
 
+import com.example.desafio_spring.dto.ProductRequest;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
+import com.example.desafio_spring.model.Purchase;
 import com.example.desafio_spring.repository.ProductRepo;
 import com.example.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +90,36 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> freeShippingAndPrestigeOrdered(String prestige, String orderParam) {
         List<Product> products = filterByFreeShippingAndPrestige(prestige);
         return orderType(orderParam, products);
+    }
+
+    @Override
+    public Purchase purchaseItens(List<ProductRequest> productRequestList) {
+        List<Product> productList = getAllProducts();
+        List<Product> productFoundList = new ArrayList<>();
+        Purchase purchase = new Purchase();
+
+
+        BigDecimal totalbd = new BigDecimal(0);
+
+        for (ProductRequest productRequest : productRequestList) {
+
+            for (Product product : productList) {
+
+                if (product.getProductId() == productRequest.getProductId()) {
+                    product.setQuantity(productRequest.getQuantity());
+                    BigDecimal quantity = new BigDecimal(product.getQuantity());
+                    totalbd = totalbd.add(product.getPrice().multiply(quantity));
+                    productFoundList.add(product);
+                }
+            }
+        }
+
+        purchase.setProductList(productFoundList);
+        purchase.setPurchaseId((long) (Math.random() * ((100 - 1) + 1)) + 1);
+        purchase.setTotal(totalbd);
+
+
+        return purchase;
     }
 
     private List<Product> orderType(String orderParam, List<Product> products) {

@@ -1,6 +1,8 @@
 package com.example.desafio_spring.controller;
 
+import com.example.desafio_spring.dto.ProductRequest;
 import com.example.desafio_spring.model.Product;
+import com.example.desafio_spring.model.Purchase;
 import com.example.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,5 +52,11 @@ public class ProductsController {
     @PostMapping
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/purchase")
+    public ResponseEntity<Purchase>sendPurchase(@RequestBody List<ProductRequest> list){
+
+        return new ResponseEntity<>(productService.purchaseItens(list),HttpStatus.CREATED);
     }
 }
