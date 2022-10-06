@@ -1,15 +1,16 @@
 package com.example.desafio_spring.controller;
 
+import com.example.desafio_spring.dto.ProductRequest;
+import com.example.desafio_spring.dto.ProductResponse;
 import com.example.desafio_spring.model.Product;
+import com.example.desafio_spring.model.Purchase;
 import com.example.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -49,5 +50,13 @@ public class ProductsController {
         return new ResponseEntity<>(productService.freeShippingAndPrestigeOrdered(prestige, orderParam), HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody Product product) {
+        return new ResponseEntity<>(ProductResponse.convertToResponse(productService.createProduct(product)), HttpStatus.CREATED);
+    }
 
+    @PostMapping(path = "/purchase")
+    public ResponseEntity<Purchase> sendPurchase(@RequestBody List<ProductRequest> list) {
+        return new ResponseEntity<>(productService.purchaseItens(list), HttpStatus.CREATED);
+    }
 }

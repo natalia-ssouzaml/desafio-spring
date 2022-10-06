@@ -1,13 +1,20 @@
 package com.example.desafio_spring.service.impl;
 
+import com.example.desafio_spring.dto.ProductRequest;
+import com.example.desafio_spring.exception.InvalidPriceException;
+import com.example.desafio_spring.exception.InvalidQuantityException;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
+import com.example.desafio_spring.model.Purchase;
 import com.example.desafio_spring.repository.ProductRepo;
 import com.example.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
@@ -18,6 +25,13 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
 
+    @Override
+    public Product createProduct(Product product) {
+        if (product.getQuantity() < 1) throw new InvalidQuantityException("You have to insert at least one product");
+        if (product.getPrice().compareTo(new BigDecimal(0)) < 0) throw new InvalidPriceException("Your product must not have a negative price");
+        return productRepo.createProduct(product);
+    }
+
     /**
      * [Descrição do que o método faz]
      *
@@ -25,7 +39,6 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> getAllProducts() {
-
         return productRepo.getAllProducts();
     }
 
@@ -81,6 +94,45 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> freeShippingAndPrestigeOrdered(String prestige, String orderParam) {
         List<Product> products = filterByFreeShippingAndPrestige(prestige);
         return orderType(orderParam, products);
+    }
+
+    @Override
+    public Purchase purchaseItens(List<ProductRequest> productRequestList) {
+        Purchase purchase = new Purchase();
+        List<Product> productList = getAllProducts();
+        List<Product> productFoundList = productsVerification(productRequestList, productList);
+        BigDecimal total = new BigDecimal(0);
+
+        for (Product product : productFoundList) {
+            BigDecimal quantity = new BigDecimal(product.getQuantity());
+            total = total.add(product.getPrice().multiply(quantity));
+        }
+
+        purchase.setPurchaseId((long) (Math.random() * ((100 - 1) + 1)) + 1);
+        purchase.setProductList(productFoundList);
+        purchase.setTotal(total);
+        return purchase;
+    }
+
+    private List<Product> productsVerification(List<ProductRequest> productRequestList, List<Product> products) {
+        List<Product> productFoundList = new ArrayList<>();
+
+        for (ProductRequest productRequest : productRequestList) {
+            boolean productFound = false;
+            for (Product product : products) {
+                if (Objects.equals(product.getProductId(), productRequest.getProductId())) {
+                    if (productRequest.getQuantity() > product.getQuantity()) throw new InvalidQuantityException("Quantity of products exceeded");
+                    if (productRequest.getQuantity() < 1 ) throw new InvalidQuantityException("You have to chose at least one product to purchase");
+                    product.setQuantity(productRequest.getQuantity());
+                    productFoundList.add(product);
+                    productFound = true;
+                }
+            }
+            if (!productFound) {
+                throw new NotFoundException("ProductId not found: Id[" + productRequest.getProductId() + "]");
+            }
+        }
+        return productFoundList;
     }
 
     private List<Product> orderType(String orderParam, List<Product> products) {
