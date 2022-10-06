@@ -16,10 +16,11 @@ import java.util.List;
 @Repository
 public class CustomerRepo {
 
-    private String linkFile = "src/main/resources/customers.json";
+    private final String linkFile = "src/main/resources/customers.json";
 
     /**
-     * Metodo responsavel por retornar uma lista com todos os clientes.
+     * Método responsável por retornar uma lista com todos os clientes
+     *
      * @return List<Customer>
      */
     public List<Customer> getAllCustomers() {
@@ -32,9 +33,10 @@ public class CustomerRepo {
     }
 
     /**
-     * Metodo responsavel por salvar um novo cliente.
+     * Método responsável por salvar um novo cliente.
+     *
      * @param customer -> novo cliente adicionado.
-     * @return Customer -> novo cliente criado.
+     * @return Customer — novo cliente criado.
      */
     public Customer createCustomer(Customer customer) {
         ObjectMapper mapper = new ObjectMapper();
@@ -48,8 +50,7 @@ public class CustomerRepo {
 
         try {
             writer.writeValue(new File(linkFile), customerList);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new CreationFailureException("Invalid creation attributes");
         }
 
