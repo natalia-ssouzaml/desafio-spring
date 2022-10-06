@@ -1,7 +1,8 @@
 package com.example.desafio_spring.service.impl;
 
 import com.example.desafio_spring.dto.ProductRequest;
-import com.example.desafio_spring.exception.ExceededQuantityException;
+import com.example.desafio_spring.exception.InvalidPriceException;
+import com.example.desafio_spring.exception.InvalidQuantityException;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
 import com.example.desafio_spring.model.Purchase;
@@ -26,6 +27,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(Product product) {
+        if (product.getQuantity() < 1) throw new InvalidQuantityException("You have to insert at least one product");
+        if (product.getPrice().compareTo(new BigDecimal(0)) < 0) throw new InvalidPriceException("Your product must not have a negative price");
         return productRepo.createProduct(product);
     }
 
@@ -118,9 +121,8 @@ public class ProductServiceImpl implements ProductService {
             boolean productFound = false;
             for (Product product : products) {
                 if (Objects.equals(product.getProductId(), productRequest.getProductId())) {
-                    if (productRequest.getQuantity() > product.getQuantity()) {
-                        throw new ExceededQuantityException("Quantity of products exceeded");
-                    }
+                    if (productRequest.getQuantity() > product.getQuantity()) throw new InvalidQuantityException("Quantity of products exceeded");
+                    if (productRequest.getQuantity() < 1 ) throw new InvalidQuantityException("You have to chose at least one product to purchase");
                     product.setQuantity(productRequest.getQuantity());
                     productFoundList.add(product);
                     productFound = true;

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,21 +29,23 @@ public class ProductRepo {
     }
 
     public Product createProduct(Product product) {
-            ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
 
-            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
-            // Adicionar novo veículo
-            List<Product> productList = getAllProducts();
-            productList = new ArrayList<>(productList);
-            productList.add(product);
+        List<Product> productList = getAllProducts();
+        productList = new ArrayList<>(productList);
+        product.setProductId((long) (productList.size() + 1));
+        productList.add(product);
 
-            try {
-                writer.writeValue(new File(linkFile), productList);
-            } catch (Exception ex) {
-                throw new CreationFailureException("Invalid creation attributes");
-            }
+        try {
+            writer.writeValue(new File(linkFile), productList);
+        }
+        catch (Exception ex) {
+            throw new CreationFailureException("Invalid creation attributes");
+        }
 
-            return product;
+
+        return product;
     }
 }

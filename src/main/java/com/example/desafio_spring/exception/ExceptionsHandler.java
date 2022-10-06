@@ -2,6 +2,7 @@ package com.example.desafio_spring.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,7 +24,7 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(CreationFailureException.class)
-    public ResponseEntity<ExceptionDetails> handlerNotFoundException(CreationFailureException ex) {
+    public ResponseEntity<ExceptionDetails> handlerCreationFailureException(CreationFailureException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .title("Invalid creation attributes")
                 .message(ex.getMessage())
@@ -34,10 +35,33 @@ public class ExceptionsHandler {
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ExceededQuantityException.class)
-    public ResponseEntity<ExceptionDetails> handlerExceededQuantityException(ExceededQuantityException ex) {
+    @ExceptionHandler(InvalidQuantityException.class)
+    public ResponseEntity<ExceptionDetails> handlerInvalidQuantityException(InvalidQuantityException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                .title("Quantity exceeded")
+                .title("Invalid Quantity")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionDetails> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Creation Failed")
+                .message("Missing atributes")
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidPriceException.class)
+    public ResponseEntity<ExceptionDetails> handlerInvalidPriceException(InvalidPriceException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Creation Failed")
                 .message(ex.getMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .timeStamp(LocalDateTime.now())

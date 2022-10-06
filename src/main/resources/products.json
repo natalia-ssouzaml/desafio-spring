@@ -106,31 +106,4 @@
   "quantity" : 9,
   "freeShipping" : true,
   "prestige" : "***"
-}, {
-  "productId" : 13,
-  "name" : "Fone de Ouvido",
-  "category" : "Celulares",
-  "brand" : "SONY",
-  "price" : 123.00,
-  "quantity" : 12,
-  "freeShipping" : true,
-  "prestige" : "*****"
-}, {
-  "productId" : 14,
-  "name" : "Samsung M23",
-  "category" : "Celulares",
-  "brand" : "Samsung",
-  "price" : 1235.00,
-  "quantity" : 3,
-  "freeShipping" : true,
-  "prestige" : "****"
-}, {
-  "productId" : 14,
-  "name" : "Samsung M23",
-  "category" : "Celulares",
-  "brand" : "Samsung",
-  "price" : 1235.00,
-  "quantity" : null,
-  "freeShipping" : true,
-  "prestige" : "****"
-} ]
+}]

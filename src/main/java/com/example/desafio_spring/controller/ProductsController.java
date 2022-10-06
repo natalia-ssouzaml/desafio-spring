@@ -1,6 +1,7 @@
 package com.example.desafio_spring.controller;
 
 import com.example.desafio_spring.dto.ProductRequest;
+import com.example.desafio_spring.dto.ProductResponse;
 import com.example.desafio_spring.model.Product;
 import com.example.desafio_spring.model.Purchase;
 import com.example.desafio_spring.service.ProductService;
@@ -50,8 +51,8 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
-        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody Product product) {
+        return new ResponseEntity<>(ProductResponse.convertToResponse(productService.createProduct(product)), HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/purchase")
