@@ -11,26 +11,39 @@ import java.time.LocalDateTime;
 public class ExceptionsHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionDetails> handlerNotFoundException(NotFoundException ex){
+    public ResponseEntity<ExceptionDetails> handlerNotFoundException(NotFoundException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .title("Object not found")
                 .message(ex.getMessage())
                 .status(HttpStatus.NOT_FOUND.value())
                 .timeStamp(LocalDateTime.now())
-                .build();//Retorna um objeto do tipo ExceptionDetails
+                .build();
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CreationFailureException.class)
-    public ResponseEntity<ExceptionDetails> handlerNotFoundException(CreationFailureException ex){
+    public ResponseEntity<ExceptionDetails> handlerNotFoundException(CreationFailureException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .title("Invalid creation attributes")
                 .message(ex.getMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .timeStamp(LocalDateTime.now())
-                .build();//Retorna um objeto do tipo ExceptionDetails
+                .build();
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ExceededQuantityException.class)
+    public ResponseEntity<ExceptionDetails> handlerExceededQuantityException(ExceededQuantityException ex) {
+        ExceptionDetails exceptionDetails = ExceptionDetails.builder()
+                .title("Quantity exceeded")
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
+    }
+
 }

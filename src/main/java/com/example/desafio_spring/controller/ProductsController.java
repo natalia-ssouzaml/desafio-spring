@@ -55,8 +55,7 @@ public class ProductsController {
     }
 
     @PostMapping(path = "/purchase")
-    public ResponseEntity<Purchase>sendPurchase(@RequestBody List<ProductRequest> list){
-
-        return new ResponseEntity<>(productService.purchaseItens(list),HttpStatus.CREATED);
+    public ResponseEntity<Purchase> sendPurchase(@RequestBody List<ProductRequest> list) {
+        return new ResponseEntity<>(productService.purchaseItens(list), HttpStatus.CREATED);
     }
 }

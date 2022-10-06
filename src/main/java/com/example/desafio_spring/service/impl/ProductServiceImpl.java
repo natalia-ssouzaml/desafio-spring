@@ -1,6 +1,7 @@
 package com.example.desafio_spring.service.impl;
 
 import com.example.desafio_spring.dto.ProductRequest;
+import com.example.desafio_spring.exception.ExceededQuantityException;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
 import com.example.desafio_spring.model.Purchase;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
@@ -34,7 +36,6 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<Product> getAllProducts() {
-
         return productRepo.getAllProducts();
     }
 
@@ -94,32 +95,42 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Purchase purchaseItens(List<ProductRequest> productRequestList) {
-        List<Product> productList = getAllProducts();
-        List<Product> productFoundList = new ArrayList<>();
         Purchase purchase = new Purchase();
+        List<Product> productList = getAllProducts();
+        List<Product> productFoundList = productsVerification(productRequestList, productList);
+        BigDecimal total = new BigDecimal(0);
 
-
-        BigDecimal totalbd = new BigDecimal(0);
-
-        for (ProductRequest productRequest : productRequestList) {
-
-            for (Product product : productList) {
-
-                if (product.getProductId() == productRequest.getProductId()) {
-                    product.setQuantity(productRequest.getQuantity());
-                    BigDecimal quantity = new BigDecimal(product.getQuantity());
-                    totalbd = totalbd.add(product.getPrice().multiply(quantity));
-                    productFoundList.add(product);
-                }
-            }
+        for (Product product : productFoundList) {
+            BigDecimal quantity = new BigDecimal(product.getQuantity());
+            total = total.add(product.getPrice().multiply(quantity));
         }
 
-        purchase.setProductList(productFoundList);
         purchase.setPurchaseId((long) (Math.random() * ((100 - 1) + 1)) + 1);
-        purchase.setTotal(totalbd);
-
-
+        purchase.setProductList(productFoundList);
+        purchase.setTotal(total);
         return purchase;
+    }
+
+    private List<Product> productsVerification(List<ProductRequest> productRequestList, List<Product> products) {
+        List<Product> productFoundList = new ArrayList<>();
+
+        for (ProductRequest productRequest : productRequestList) {
+            boolean productFound = false;
+            for (Product product : products) {
+                if (Objects.equals(product.getProductId(), productRequest.getProductId())) {
+                    if (productRequest.getQuantity() > product.getQuantity()) {
+                        throw new ExceededQuantityException("Quantity of products exceeded");
+                    }
+                    product.setQuantity(productRequest.getQuantity());
+                    productFoundList.add(product);
+                    productFound = true;
+                }
+            }
+            if (!productFound) {
+                throw new NotFoundException("ProductId not found: Id[" + productRequest.getProductId() + "]");
+            }
+        }
+        return productFoundList;
     }
 
     private List<Product> orderType(String orderParam, List<Product> products) {

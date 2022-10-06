@@ -9,16 +9,18 @@ import java.util.List;
 public interface ProductService {
 
     Product createProduct(Product product);
+
     List<Product> getAllProducts();
-    List<Product>filterByCategory(String category);
 
-    List<Product>filterByCategoryAndFreeShipping(String category);
+    List<Product> filterByCategory(String category);
 
-    List<Product>filterByFreeShippingAndPrestige(String prestige);
+    List<Product> filterByCategoryAndFreeShipping(String category);
 
-    List<Product>categoryAndFreeShippingOrdered(String category, String orderParam);
+    List<Product> filterByFreeShippingAndPrestige(String prestige);
 
-    List<Product>freeShippingAndPrestigeOrdered(String prestige, String orderParam);
+    List<Product> categoryAndFreeShippingOrdered(String category, String orderParam);
+
+    List<Product> freeShippingAndPrestigeOrdered(String prestige, String orderParam);
 
     Purchase purchaseItens(List<ProductRequest> productRequestList);
 }
