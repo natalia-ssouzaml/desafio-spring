@@ -33,22 +33,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.createProduct(product);
     }
 
-    /**
-     * Metodo responsavel por retornar uma lista de todos os produtos.
-     *
-     * @return Lista de todos os produtos.
-     */
     @Override
     public List<Product> getAllProducts() {
         return productRepo.getAllProducts();
     }
 
-    /**
-     * Método responsavel por retornar uma lista de produtos de determinada categoria passada por parametro.
-     *
-     * @param category
-     * @return List<Product> filtrado por categoria.
-     */
     @Override
     public List<Product> filterByCategory(String category) {
         List<Product> products = getAllProducts().stream()
@@ -62,13 +51,6 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    /**
-     * Método responsavel por retornar uma lista de produtos de determinada categoria  passada por parametro com frete gratis.
-     *
-     * @param category
-     * @return List<Product> filtrado por categoria com frete gratis.
-     * @throws NotFoundException quando uma categoria for inexistente.
-     */
     @Override
     public List<Product> filterByCategoryAndFreeShipping(String category) {
 
@@ -83,13 +65,6 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    /**
-     * Método responsavel por retornar uma lista de produtos de acordo com a avaliação e com frete gratis.
-     *
-     * @param prestige
-     * @return List<Product> filtrado por avaliação e com frete gratis.
-     * @throws NotFoundException quando nao existir produto com a avaliação passada por parametro.
-     */
     @Override
     public List<Product> filterByFreeShippingAndPrestige(String prestige) {
         List<Product> products = getAllProducts().stream()
@@ -103,40 +78,18 @@ public class ProductServiceImpl implements ProductService {
         return products;
     }
 
-    /**
-     * Método responsavel por retornar uma lista de produtos de acordo com a categoria e com frete gratis ordenado
-     * de acordo com a ordem escolhida.
-     *
-     * @param category
-     * @param orderParam -> pode ser asc, desc, lowprice e highprice.
-     * @return List<Product> filtrado por categoria e com frete gratis ordenado.
-     */
     @Override
     public List<Product> categoryAndFreeShippingOrdered(String category, String orderParam) {
         List<Product> products = filterByCategoryAndFreeShipping(category);
         return orderType(orderParam, products);
     }
 
-    /**
-     * Método responsavel por retornar uma lista de produtos de acordo com a avaliação e com frete gratis ordenado
-     * de acordo com a ordem escolhida.
-     *
-     * @param prestige
-     * @param orderParam -> pode ser asc, desc, lowprice e highprice.
-     * @return List<Product> filtrado por avaliação e com frete gratis ordenado.
-     */
     @Override
     public List<Product> freeShippingAndPrestigeOrdered(String prestige, String orderParam) {
         List<Product> products = filterByFreeShippingAndPrestige(prestige);
         return orderType(orderParam, products);
     }
 
-    /**
-     * Metodo responsavel por registrar a compra de um ou mais produtos.
-     *
-     * @param productRequestList -> lista de produtos solicitados.
-     * @return List<Product> -> uma lista com os produtos solicitados.
-     */
     @Override
     public Purchase purchaseItens(List<ProductRequest> productRequestList) {
         Purchase purchase = new Purchase();
@@ -156,11 +109,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * Metodo responsavel por verificar se o produto esta disponivel de acordo com a quantidade disponivel.
+     * Método responsável por verificar se o produto esta disponível conforme a quantidade disponível
      *
-     * @param productRequestList -> lista de produtos solicitados.
-     * @param products           -> produtos existentes no estoque.
-     * @return List<Product> -> uma lista com os produtos solicitados.
+     * @param productRequestList -> lista de produtos solicitados
+     * @param products           -> produtos existentes no estoque
+     * @return List<Product> -> uma lista com os produtos solicitados
      */
     private List<Product> productsVerification(List<ProductRequest> productRequestList, List<Product> products) {
         List<Product> productFoundList = new ArrayList<>();
@@ -186,12 +139,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * Metodo responsavel por ordenar a lista de acordo com as opções de ordenação.
-     * @param orderParam -> pode ser asc, desc, lowprice e highprice.
-     * @param products -> lista de todos os produtos.
-     * @return List<Product> -> lista de produtos ordenadas pelo parametro.
+     * Método responsável por ordenar a lista conforme as opções de ordenação
+     *
+     * @param orderParam -> pode ser asc, desc, lowprice e highprice
+     * @param products   -> lista de todos os produtos
+     * @return List<Product> -> lista de produtos ordenadas pelo parâmetro
      */
-
     private List<Product> orderType(String orderParam, List<Product> products) {
         switch (orderParam) {
             case "asc":

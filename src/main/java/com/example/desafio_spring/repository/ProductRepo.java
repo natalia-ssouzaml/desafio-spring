@@ -16,10 +16,11 @@ import java.util.List;
 @Repository
 public class ProductRepo {
 
-    private String linkFile = "src/main/resources/products.json";
+    private final String linkFile = "src/main/resources/products.json";
 
     /**
-     * Metodo responsavel por retornar uma lista com todos os produtos.
+     * Método responsável por retornar uma lista com todos os produtos
+     *
      * @return List<Product>
      */
     public List<Product> getAllProducts() {
@@ -32,13 +33,13 @@ public class ProductRepo {
     }
 
     /**
-     * Metodo responsavel por salvar um novo produto.
-     * @param product -> novo produto adicionado.
-     * @return Product -> novo produto criado.
+     * Método responsável por salvar um novo produto
+     *
+     * @param product -> novo produto adicionado
+     * @return Product -> novo produto criado
      */
     public Product createProduct(Product product) {
         ObjectMapper mapper = new ObjectMapper();
-
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
 
         List<Product> productList = getAllProducts();
@@ -48,11 +49,9 @@ public class ProductRepo {
 
         try {
             writer.writeValue(new File(linkFile), productList);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new CreationFailureException("Invalid creation attributes");
         }
-
 
         return product;
     }
