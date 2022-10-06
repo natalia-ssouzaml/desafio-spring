@@ -19,6 +19,10 @@ public class ProductRepo {
 
     private String linkFile = "src/main/resources/products.json";
 
+    /**
+     * Metodo responsavel por retornar uma lista com todos os produtos.
+     * @return List<Product>
+     */
     public List<Product> getAllProducts() {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -28,6 +32,11 @@ public class ProductRepo {
         }
     }
 
+    /**
+     * Metodo responsavel por salvar um novo produto.
+     * @param product -> novo produto adicionado.
+     * @return Product -> novo produto criado.
+     */
     public Product createProduct(Product product) {
         ObjectMapper mapper = new ObjectMapper();
 

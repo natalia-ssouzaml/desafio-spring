@@ -106,4 +106,13 @@
   "quantity" : 9,
   "freeShipping" : true,
   "prestige" : "***"
-}]
+}, {
+  "productId" : 13,
+  "name" : "Corona",
+  "category" : "Bebidas",
+  "brand" : "Corona",
+  "price" : 2.0,
+  "quantity" : 7,
+  "freeShipping" : true,
+  "prestige" : "****"
+} ]

@@ -30,7 +30,7 @@ public class ProductsController {
         return new ResponseEntity<>(productService.filterByCategory(category), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/freeShipping/{category}")
+    @GetMapping(path = "/freeShipping/category/{category}")
     public ResponseEntity<List<Product>> filterByCategoryAndFreeShipping(@PathVariable String category) {
         return new ResponseEntity<>(productService.filterByCategoryAndFreeShipping(category), HttpStatus.OK);
     }
