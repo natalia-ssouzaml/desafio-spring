@@ -46,11 +46,12 @@ public class ExceptionsHandler {
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDetails> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .title("Creation Failed")
-                .message("Missing atributes: "+ex.getFieldError().getDefaultMessage())
+                .message("Missing atributes: " + ex.getFieldError().getDefaultMessage())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .timeStamp(LocalDateTime.now())
                 .build();
@@ -71,7 +72,7 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(AlreadyExistentException.class)
-    public ResponseEntity<ExceptionDetails>handlerAlreadyExistentException(AlreadyExistentException ex){
+    public ResponseEntity<ExceptionDetails> handlerAlreadyExistentException(AlreadyExistentException ex) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
                 .title("Creation Failed")
                 .message(ex.getMessage())

@@ -17,17 +17,16 @@ public class CustomerResponse {
     private String city;
     private String state;
 
-
     public static CustomerResponse convertToResponse(Customer customer) {
-        return new CustomerResponse(customer.getCustomerId(), customer.getName(), customer.getCity(), customer.getState());
+        return new CustomerResponse(customer.getCustomerId(), customer.getName(), customer.getCity(),
+                customer.getState());
     }
 
     public static List<CustomerResponse> convertListToResponse(List<Customer> customerList) {
 
-        List<CustomerResponse> customerResponseList = customerList.stream()
-                .map(customer -> CustomerResponse.convertToResponse(customer))
+        return customerList.stream()
+                .map(CustomerResponse::convertToResponse)
                 .collect(Collectors.toList());
 
-        return customerResponseList;
     }
 }

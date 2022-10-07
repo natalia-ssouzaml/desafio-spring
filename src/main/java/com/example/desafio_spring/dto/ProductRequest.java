@@ -15,5 +15,4 @@ public class ProductRequest {
     private Long productId;
     @NotNull
     private int quantity;
-
 }

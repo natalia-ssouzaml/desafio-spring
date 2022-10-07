@@ -2,7 +2,6 @@ package com.example.desafio_spring.service;
 
 import java.util.List;
 
-import com.example.desafio_spring.dto.CustomerResponse;
 import com.example.desafio_spring.model.Customer;
 
 public interface CustomerService {
@@ -13,12 +12,14 @@ public interface CustomerService {
      * @return um cliente.
      **/
     Customer getCustomerById(Long id);
+
     /**
      * Método responsável por retornar uma lista com todos os clientes
      *
      * @return Lista com todos os clientes
      */
     List<Customer> getAllCustomers();
+
     /**
      * Metodo responsavel por criar um novo cliente.
      *
@@ -27,8 +28,10 @@ public interface CustomerService {
      **/
 
     Customer createCustomer(Customer customer);
+
     /**
-     * Método responsável por retornar uma lista de clientes de determinado estado passada por parâmetro
+     * Método responsável por retornar uma lista de clientes de determinado estado
+     * passada por parâmetro
      *
      * @param state — Estado do cliente.
      * @return List<Customer> filtrado por estado

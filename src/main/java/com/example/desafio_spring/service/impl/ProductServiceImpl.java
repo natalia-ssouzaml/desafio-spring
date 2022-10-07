@@ -30,14 +30,16 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(Long id) {
         Optional<Product> productOptional = productRepo.getProductById(id);
 
-        if (productOptional.isEmpty()) throw new NotFoundException("Product not found");
+        if (productOptional.isEmpty())
+            throw new NotFoundException("Product not found");
 
         return productOptional.get();
     }
 
     @Override
     public Product createProduct(Product product) {
-        if (product.getQuantity() < 1) throw new InvalidQuantityException("You have to insert at least one product");
+        if (product.getQuantity() < 1)
+            throw new InvalidQuantityException("You have to insert at least one product");
         if (product.getPrice().compareTo(new BigDecimal(0)) < 0)
             throw new InvalidPriceException("Your product must not have a negative price");
         return productRepo.createProduct(product);
@@ -50,10 +52,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> filterByCategory(String category) {
-        List<Product> products = getAllProducts().stream().filter(p -> p.getCategory().equalsIgnoreCase(category)).collect(Collectors.toList());
+        List<Product> products = getAllProducts().stream().filter(p -> p.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
 
-        if (products.isEmpty()) throw new NotFoundException("There are not any products in this category: " + category);
-
+        if (products.isEmpty())
+            throw new NotFoundException("There are not any products in this category: " + category);
 
         return products;
     }
@@ -61,7 +64,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> filterByCategoryAndFreeShipping(String category) {
 
-        List<Product> products = getAllProducts().stream().filter(p -> p.getCategory().equalsIgnoreCase(category) && p.getFreeShipping()).collect(Collectors.toList());
+        List<Product> products = getAllProducts().stream()
+                .filter(p -> p.getCategory().equalsIgnoreCase(category) && p.getFreeShipping())
+                .collect(Collectors.toList());
 
         if (products.isEmpty()) {
             throw new NotFoundException("There are not any products with free shipping in this category: " + category);
@@ -72,7 +77,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> filterByFreeShippingAndPrestige(String prestige) {
-        List<Product> products = getAllProducts().stream().filter(p -> p.getPrestige().equals(prestige) && p.getFreeShipping()).collect(Collectors.toList());
+        List<Product> products = getAllProducts().stream()
+                .filter(p -> p.getPrestige().equals(prestige) && p.getFreeShipping()).collect(Collectors.toList());
 
         if (products.isEmpty()) {
             throw new NotFoundException("There are not any products with free shipping in this rating");
@@ -112,7 +118,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * Método responsável por verificar se o produto esta disponível conforme a quantidade disponível
+     * Método responsável por verificar se o produto esta disponível conforme a
+     * quantidade disponível
      *
      * @param productRequestList -> lista de produtos solicitados
      * @param products           -> produtos existentes no estoque

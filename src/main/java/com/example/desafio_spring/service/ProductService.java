@@ -33,7 +33,8 @@ public interface ProductService {
     List<Product> getAllProducts();
 
     /**
-     * Método responsável por retornar uma lista de produtos de determinada categoria passada por parâmetro
+     * Método responsável por retornar uma lista de produtos de determinada
+     * categoria passada por parâmetro
      *
      * @param category — categoria do produto
      * @return List<Product> filtrado por categoria
@@ -41,7 +42,8 @@ public interface ProductService {
     List<Product> filterByCategory(String category);
 
     /**
-     * Método responsável por retornar uma lista de produtos de determinada categoria passada por parâmetro com frete gratis
+     * Método responsável por retornar uma lista de produtos de determinada
+     * categoria passada por parâmetro com frete gratis
      *
      * @param category — categoria do produto
      * @return List<Product> filtrado por categoria com frete gratis
@@ -50,16 +52,19 @@ public interface ProductService {
     List<Product> filterByCategoryAndFreeShipping(String category);
 
     /**
-     * Método responsável por retornar uma lista de produtos conforme a avaliação e com frete gratis
+     * Método responsável por retornar uma lista de produtos conforme a avaliação e
+     * com frete gratis
      *
      * @param prestige — avaliação do produto
      * @return List<Product> filtrado por avaliação e com frete gratis
-     * @throws NotFoundException quando nao existir produto com a avaliação passada por parâmetro
+     * @throws NotFoundException quando nao existir produto com a avaliação passada
+     *                           por parâmetro
      */
     List<Product> filterByFreeShippingAndPrestige(String prestige);
 
     /**
-     * Método responsável por retornar uma lista de produtos conforme a categoria e com frete gratis ordenado
+     * Método responsável por retornar uma lista de produtos conforme a categoria e
+     * com frete gratis ordenado
      * conforme a ordem escolhida
      *
      * @param category   - categoria do produto
@@ -69,7 +74,8 @@ public interface ProductService {
     List<Product> categoryAndFreeShippingOrdered(String category, String orderParam);
 
     /**
-     * Método responsável por retornar uma lista de produtos conforme a avaliação e com frete gratis ordenado
+     * Método responsável por retornar uma lista de produtos conforme a avaliação e
+     * com frete gratis ordenado
      * conforme a ordem escolhida
      *
      * @param prestige   — avaliação do produto

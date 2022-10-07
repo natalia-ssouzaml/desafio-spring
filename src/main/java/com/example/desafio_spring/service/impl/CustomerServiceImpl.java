@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.example.desafio_spring.dto.CustomerResponse;
 import com.example.desafio_spring.exception.AlreadyExistentException;
 import com.example.desafio_spring.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
-
     @Override
     public Customer getCustomerById(Long id) {
         Optional<Customer> customerOptional = customerRepo.getCustomerById(id);
 
-        if(customerOptional.isEmpty())throw new NotFoundException("Customer not found");
+        if (customerOptional.isEmpty())
+            throw new NotFoundException("Customer not found");
         return customerOptional.get();
     }
 
@@ -43,7 +42,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
-     * Método responsavel por validar na criação de um novo cliente se ele ja esta cadastrado atraves do atributo cpf.
+     * Método responsavel por validar na criação de um novo cliente se ele ja esta
+     * cadastrado atraves do atributo cpf.
+     * 
      * @param customer > novo cliente.
      */
     private void customerValidation(Customer customer) {
@@ -61,9 +62,9 @@ public class CustomerServiceImpl implements CustomerService {
                 .filter(customer -> customer.getState().equalsIgnoreCase(state))
                 .collect(Collectors.toList());
 
-        if (customerList.isEmpty()) throw new NotFoundException("There are not any customers in this state: " + state);
+        if (customerList.isEmpty())
+            throw new NotFoundException("There are not any customers in this state: " + state);
         return customerList;
     }
-
 
 }

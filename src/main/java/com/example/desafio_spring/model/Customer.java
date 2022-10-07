@@ -24,9 +24,9 @@ public class Customer {
     @NotNull(message = "State must not be null")
     private String state;
     @NotNull(message = "Email must not be null")
-    @Email (message = "Email must be in this format: example@example.com")
+    @Email(message = "Email must be in this format: example@example.com")
     private String email;
     @NotNull(message = "Password must not be null")
-    @Size(min = 6, max = 12,message="The password must be between 6 to 12 characters")
+    @Size(min = 6, max = 12, message = "The password must be between 6 to 12 characters")
     private String password;
 }

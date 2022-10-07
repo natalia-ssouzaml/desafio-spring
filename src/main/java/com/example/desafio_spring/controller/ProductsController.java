@@ -48,17 +48,20 @@ public class ProductsController {
     }
 
     @GetMapping(path = "/freeShipping/category/{category}/{orderParam}")
-    public ResponseEntity<List<Product>> categoryAndFreeShippingOrdered(@PathVariable String category, @PathVariable String orderParam) {
+    public ResponseEntity<List<Product>> categoryAndFreeShippingOrdered(@PathVariable String category,
+            @PathVariable String orderParam) {
         return new ResponseEntity<>(productService.categoryAndFreeShippingOrdered(category, orderParam), HttpStatus.OK);
     }
 
     @GetMapping(path = "/freeShipping/prestige/{prestige}/{orderParam}")
-    public ResponseEntity<List<Product>> freeShippingAndPrestigeOrdered(@PathVariable String prestige, @PathVariable String orderParam) {
+    public ResponseEntity<List<Product>> freeShippingAndPrestigeOrdered(@PathVariable String prestige,
+            @PathVariable String orderParam) {
         return new ResponseEntity<>(productService.freeShippingAndPrestigeOrdered(prestige, orderParam), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody Product product, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody Product product,
+            UriComponentsBuilder uriComponentsBuilder) {
         Product p = productService.createProduct(product);
         URI uri = uriComponentsBuilder.path("products/id/{id}").buildAndExpand(p.getProductId()).toUri();
         return ResponseEntity.created(uri).body(ProductResponse.convertToResponse(p));

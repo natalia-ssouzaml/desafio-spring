@@ -1,4 +1,5 @@
 package com.example.desafio_spring.repository;
+
 import com.example.desafio_spring.exception.CreationFailureException;
 
 import com.example.desafio_spring.exception.NotFoundException;
@@ -21,6 +22,7 @@ public class CustomerRepo {
 
     /**
      * Método responsavel por retornar um cliente pelo id.
+     * 
      * @param id > Numero criado para identificar cliente.
      * @return um customer.
      */
@@ -57,15 +59,14 @@ public class CustomerRepo {
 
         List<Customer> customerList = getAllCustomers();
         customerList = new ArrayList<>(customerList);
-        customer.setCustomerId((long) customerList.get(customerList.size() - 1).getCustomerId() + 1);
+        customer.setCustomerId(customerList.get(customerList.size() - 1).getCustomerId() + 1);
         customerList.add(customer);
 
         try {
             writer.writeValue(new File(linkFile), customerList);
         } catch (Exception ex) {
-            throw new CreationFailureException ("Invalid creation attributes");
+            throw new CreationFailureException("Invalid creation attributes");
         }
-
 
         return customer;
     }

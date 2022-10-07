@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Purchase {
-
     private Long purchaseId;
     private List<Product> productList;
     private BigDecimal total;
