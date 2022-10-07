@@ -24,7 +24,7 @@ public interface CustomerService {
      * Metodo responsavel por criar um novo cliente.
      *
      * @param customer > novo cliente recebido atraves do body.
-     * @return o cliente criado.
+     * @return List<Customer> o cliente criado.
      **/
 
     Customer createCustomer(Customer customer);
@@ -37,4 +37,10 @@ public interface CustomerService {
      * @return List<Customer> filtrado por estado
      */
     List<Customer> filterByState(String state);
+
+    /**
+     * Método responsável por retornar uma lista de clientes com suas compras
+     * @return List<Customer> Listas de clientes com suas compras
+     **/
+    List<Customer> getAllCustomerWithProducts();
 }

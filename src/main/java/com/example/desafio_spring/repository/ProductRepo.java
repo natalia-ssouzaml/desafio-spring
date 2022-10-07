@@ -52,7 +52,7 @@ public class ProductRepo {
 
         List<Product> productList = getAllProducts();
         productList = new ArrayList<>(productList);
-        product.setProductId((long) productList.get(productList.size() - 1).getProductId() + 1);
+        product.setProductId(productList.get(productList.size() - 1).getProductId() + 1);
         productList.add(product);
 
         try {

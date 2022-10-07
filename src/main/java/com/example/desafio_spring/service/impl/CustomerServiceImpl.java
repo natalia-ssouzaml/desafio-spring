@@ -1,11 +1,13 @@
 package com.example.desafio_spring.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.desafio_spring.exception.AlreadyExistentException;
 import com.example.desafio_spring.exception.NotFoundException;
+import com.example.desafio_spring.model.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,24 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerRepo.getAllCustomers();
 
+    }
+
+    @Override
+    public List<Customer> getAllCustomerWithProducts() {
+        List<Customer> customerList = new ArrayList<>(customerRepo.getAllCustomers());
+        List<Purchase> purchaseList = new ArrayList<>(Purchase.purchaseList);
+
+        customerList.forEach(customer -> {
+            List<Purchase> customerPurchaseList = new ArrayList<>();
+            for (Purchase purchase : purchaseList) {
+                if(purchase.getCustomerId() == customer.getCustomerId()){
+                    customerPurchaseList.add(purchase);
+                }
+            }
+            customer.setPurchaseList(customerPurchaseList);
+        });
+
+        return customerList;
     }
 
     @Override

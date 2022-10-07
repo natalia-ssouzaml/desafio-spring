@@ -1,7 +1,7 @@
 package com.example.desafio_spring.controller;
 
-import com.example.desafio_spring.dto.ProductRequest;
 import com.example.desafio_spring.dto.ProductResponse;
+import com.example.desafio_spring.dto.PurchaseRequest;
 import com.example.desafio_spring.model.Product;
 import com.example.desafio_spring.model.Purchase;
 import com.example.desafio_spring.service.ProductService;
@@ -68,7 +68,7 @@ public class ProductsController {
     }
 
     @PostMapping(path = "/purchase")
-    public ResponseEntity<Purchase> sendPurchase(@RequestBody List<ProductRequest> list) {
-        return new ResponseEntity<>(productService.purchaseItens(list), HttpStatus.CREATED);
+    public ResponseEntity<Purchase> sendPurchase(@RequestBody PurchaseRequest body) {
+        return new ResponseEntity<>(productService.purchaseItens(body), HttpStatus.CREATED);
     }
 }
