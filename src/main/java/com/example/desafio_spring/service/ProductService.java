@@ -9,8 +9,20 @@ import java.util.List;
 
 public interface ProductService {
 
-
+    /**
+     * Método responsavel por retornar produto pelo id.
+     *
+     * @param id > gerado automaticamente na criação de um produto.
+     * @return um produto.
+     **/
     Product getProductById(Long id);
+
+    /**
+     * Metodo responsavel por criar um novo produto.
+     *
+     * @param product > novo produto recebido atraves do body.
+     * @return o produto criado.
+     **/
     Product createProduct(Product product);
 
     /**

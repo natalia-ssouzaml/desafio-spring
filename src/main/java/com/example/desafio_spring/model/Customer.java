@@ -27,6 +27,6 @@ public class Customer {
     @Email (message = "Email must be in this format: example@example.com")
     private String email;
     @NotNull(message = "Password must not be null")
-    @Size(min = 6, max = 12,message="The password must be between 6 to 12 characters") //Capturar exception
+    @Size(min = 6, max = 12,message="The password must be between 6 to 12 characters")
     private String password;
 }

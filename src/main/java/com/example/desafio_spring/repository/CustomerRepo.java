@@ -1,6 +1,6 @@
 package com.example.desafio_spring.repository;
-
 import com.example.desafio_spring.exception.CreationFailureException;
+
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Customer;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
@@ -19,7 +19,11 @@ public class CustomerRepo {
 
     private final String linkFile = "src/main/resources/customers.json";
 
-
+    /**
+     * Método responsavel por retornar um cliente pelo id.
+     * @param id > Numero criado para identificar cliente.
+     * @return um customer.
+     */
     public Optional<Customer> getCustomerById(Long id) {
         return getAllCustomers().stream()
                 .filter(c -> c.getCustomerId() == id)
@@ -59,7 +63,7 @@ public class CustomerRepo {
         try {
             writer.writeValue(new File(linkFile), customerList);
         } catch (Exception ex) {
-            throw new CreationFailureException("Invalid creation attributes");
+            throw new CreationFailureException ("Invalid creation attributes");
         }
 
 

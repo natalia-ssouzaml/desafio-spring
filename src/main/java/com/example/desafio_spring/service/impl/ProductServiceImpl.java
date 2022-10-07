@@ -50,9 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> filterByCategory(String category) {
-        List<Product> products = getAllProducts().stream()
-                .filter(p -> p.getCategory().equalsIgnoreCase(category))
-                .collect(Collectors.toList());
+        List<Product> products = getAllProducts().stream().filter(p -> p.getCategory().equalsIgnoreCase(category)).collect(Collectors.toList());
 
         if (products.isEmpty()) throw new NotFoundException("There are not any products in this category: " + category);
 
@@ -63,9 +61,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> filterByCategoryAndFreeShipping(String category) {
 
-        List<Product> products = getAllProducts().stream()
-                .filter(p -> p.getCategory().equalsIgnoreCase(category) && p.getFreeShipping())
-                .collect(Collectors.toList());
+        List<Product> products = getAllProducts().stream().filter(p -> p.getCategory().equalsIgnoreCase(category) && p.getFreeShipping()).collect(Collectors.toList());
 
         if (products.isEmpty()) {
             throw new NotFoundException("There are not any products with free shipping in this category: " + category);
@@ -76,9 +72,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> filterByFreeShippingAndPrestige(String prestige) {
-        List<Product> products = getAllProducts().stream()
-                .filter(p -> p.getPrestige().equals(prestige) && p.getFreeShipping())
-                .collect(Collectors.toList());
+        List<Product> products = getAllProducts().stream().filter(p -> p.getPrestige().equals(prestige) && p.getFreeShipping()).collect(Collectors.toList());
 
         if (products.isEmpty()) {
             throw new NotFoundException("There are not any products with free shipping in this rating");
@@ -168,5 +162,4 @@ public class ProductServiceImpl implements ProductService {
                 throw new NotFoundException("Invalid ordering");
         }
     }
-
 }

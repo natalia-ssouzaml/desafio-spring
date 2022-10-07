@@ -42,6 +42,10 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepo.createCustomer(customer);
     }
 
+    /**
+     * Método responsavel por validar na criação de um novo cliente se ele ja esta cadastrado atraves do atributo cpf.
+     * @param customer > novo cliente.
+     */
     private void customerValidation(Customer customer) {
         List<Customer> customerList = getAllCustomers();
         for (Customer customerFromList : customerList) {

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@Builder //Habilita o padrao builder para gerar o objeto.
+@Builder
 public class ExceptionDetails {
     private String title;
     private int status;
