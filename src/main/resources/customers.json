@@ -1,29 +1,37 @@
-[
-  {
-    "customerId": 2,
-    "name": "Lionel Messi",
-    "cpf": "09987612344",
-    "city": "São Paulo",
-    "state": "SP",
-    "email": "messi@gmail.com",
-    "password": "messi"
-  },
-  {
-    "customerId": 3,
-    "name": "Luis Fabiano",
-    "cpf": "09987612344",
-    "city": "São Paulo",
-    "state": "RJ",
-    "email": "luisfabiano@gmail.com",
-    "password": "Luis Fabiano"
-  },
-  {
-    "customerId": 4,
-    "name": "Mauri",
-    "cpf": "09987612344",
-    "city": "São Paulo",
-    "state": "RS",
-    "email": "mauri@gmail.com",
-    "password": "Luis Fabiano"
-  }
-]
+[ {
+  "customerId" : 2,
+  "name" : "Lionel Messi",
+  "cpf" : "09987612344",
+  "city" : "São Paulo",
+  "state" : "SP",
+  "email" : "messi@gmail.com",
+  "password" : "messi",
+  "purchaseList" : null
+}, {
+  "customerId" : 3,
+  "name" : "Luis Fabiano",
+  "cpf" : "09987612344",
+  "city" : "São Paulo",
+  "state" : "RJ",
+  "email" : "luisfabiano@gmail.com",
+  "password" : "Luis Fabiano",
+  "purchaseList" : null
+}, {
+  "customerId" : 4,
+  "name" : "Mauri",
+  "cpf" : "09987612344",
+  "city" : "São Paulo",
+  "state" : "RS",
+  "email" : "mauri@gmail.com",
+  "password" : "Luis Fabiano",
+  "purchaseList" : null
+}, {
+  "customerId" : 5,
+  "name" : "Luis Fabiano",
+  "cpf" : "72636182737",
+  "city" : "São Paulo",
+  "state" : "RJ",
+  "email" : "luisfabiano@gmail.com",
+  "password" : "Luis Fabiano",
+  "purchaseList" : null
+} ]

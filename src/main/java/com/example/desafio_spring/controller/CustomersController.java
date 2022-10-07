@@ -33,14 +33,14 @@ public class CustomersController {
                 HttpStatus.OK);
     }
 
-    @GetMapping(path = "id/{id}")
+    @GetMapping(path = "/id/{id}")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable Long id) {
         return new ResponseEntity<>(CustomerResponse.convertToResponse(customerService.getCustomerById(id)),
                 HttpStatus.OK);
 
     }
 
-    @GetMapping(path = "{state}")
+    @GetMapping(path = "/{state}")
     public ResponseEntity<List<CustomerResponse>> filterByState(@PathVariable String state) {
         return new ResponseEntity<>(CustomerResponse.convertListToResponse(customerService.filterByState(state)),
                 HttpStatus.OK);
