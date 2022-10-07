@@ -1,4 +1,6 @@
-![Logo](src/main/resources/meli.png)
+<div align="center">
+  <img src="src/main/resources/meli.png" alt="imagem meli"/>
+</div>
 
 # Desafio Spring - Grupo8
 
