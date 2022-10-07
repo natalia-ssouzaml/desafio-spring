@@ -1,6 +1,7 @@
 package com.example.desafio_spring.service;
 
 import com.example.desafio_spring.dto.ProductRequest;
+import com.example.desafio_spring.dto.PurchaseRequest;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
 import com.example.desafio_spring.model.Purchase;
@@ -87,8 +88,8 @@ public interface ProductService {
     /**
      * Método responsável por registrar a compra de um ou mais produtos
      *
-     * @param productRequestList -> lista de produtos solicitados
+     * @param purchaseRequest -> lista de produtos solicitados
      * @return List<Product> -> uma lista com os produtos solicitados
      */
-    Purchase purchaseItens(List<ProductRequest> productRequestList);
+    Purchase purchaseItens(PurchaseRequest purchaseRequest);
 }

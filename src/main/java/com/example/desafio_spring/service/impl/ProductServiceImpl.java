@@ -1,6 +1,7 @@
 package com.example.desafio_spring.service.impl;
 
 import com.example.desafio_spring.dto.ProductRequest;
+import com.example.desafio_spring.dto.PurchaseRequest;
 import com.example.desafio_spring.exception.InvalidPriceException;
 import com.example.desafio_spring.exception.InvalidQuantityException;
 import com.example.desafio_spring.exception.NotFoundException;
@@ -100,10 +101,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Purchase purchaseItens(List<ProductRequest> productRequestList) {
+    public Purchase purchaseItens(PurchaseRequest purchaseRequest) {
         Purchase purchase = new Purchase();
         List<Product> productList = getAllProducts();
-        List<Product> productFoundList = productsVerification(productRequestList, productList);
+        List<Product> productFoundList = productsVerification(purchaseRequest.getProductRequestList(), productList);
         BigDecimal total = new BigDecimal(0);
 
         for (Product product : productFoundList) {
@@ -114,6 +115,8 @@ public class ProductServiceImpl implements ProductService {
         purchase.setPurchaseId((long) (Math.random() * ((100 - 1) + 1)) + 1);
         purchase.setProductList(productFoundList);
         purchase.setTotal(total);
+        purchase.setCustomerId(purchaseRequest.getCustomerId());
+        Purchase.purchaseList.add(purchase);
         return purchase;
     }
 
