@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -23,6 +25,11 @@ public class ProductsController {
     @GetMapping()
     public ResponseEntity<List<Product>> getAllProducts() {
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/id/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{category}")
@@ -51,8 +58,10 @@ public class ProductsController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody Product product) {
-        return new ResponseEntity<>(ProductResponse.convertToResponse(productService.createProduct(product)), HttpStatus.CREATED);
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody Product product, UriComponentsBuilder uriComponentsBuilder) {
+        Product p = productService.createProduct(product);
+        URI uri = uriComponentsBuilder.path("products/id/{id}").buildAndExpand(p.getProductId()).toUri();
+        return ResponseEntity.created(uri).body(ProductResponse.convertToResponse(p));
     }
 
     @PostMapping(path = "/purchase")

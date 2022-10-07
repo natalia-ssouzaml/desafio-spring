@@ -5,16 +5,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
     private Long customerId;
+    @NotNull(message = "Name must not be null")
     private String name;
+    @NotNull(message = "Cpf must not be null")
     private String cpf;
+    @NotNull(message = "City must not be null")
     private String city;
+    @NotNull(message = "State must not be null")
     private String state;
+    @NotNull(message = "Email must not be null")
+    @Email (message = "Email must be in this format: example@example.com")
     private String email;
+    @NotNull(message = "Password must not be null")
+    @Size(min = 6, max = 12,message="The password must be between 6 to 12 characters") //Capturar exception
     private String password;
 }

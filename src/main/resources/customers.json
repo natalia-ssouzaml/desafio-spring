@@ -1,9 +1,25 @@
 [ {
-  "customerId" : 1,
-  "name" : "Cristiano Ronaldo",
+  "customerId" : 2,
+  "name" : "Lionel Messi",
   "cpf" : "09987612344",
   "city" : "São Paulo",
   "state" : "SP",
-  "email" : "cristiano@gmail.com",
-  "password" : "cristiano123"
+  "email" : "messi@gmail.com",
+  "password" : "messi"
+}, {
+  "customerId" : 3,
+  "name" : "Luis Fabiano",
+  "cpf" : "09987612344",
+  "city" : "São Paulo",
+  "state" : "RJ",
+  "email" : "luisfabiano@gmail.com",
+  "password" : "Luis Fabiano"
+}, {
+  "customerId" : 4,
+  "name" : "Mauri",
+  "cpf" : "09987612344",
+  "city" : "São Paulo",
+  "state" : "RS",
+  "email" : "mauri@gmail.com",
+  "password" : "Luis Fabiano"
 } ]

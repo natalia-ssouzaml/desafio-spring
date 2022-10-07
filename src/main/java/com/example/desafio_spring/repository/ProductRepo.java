@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ProductRepo {
@@ -23,6 +24,13 @@ public class ProductRepo {
      *
      * @return List<Product>
      */
+
+    public Optional<Product> getProductById(Long id) {
+        return getAllProducts().stream()
+                .filter(p -> p.getProductId() == id)
+                .findFirst();
+    }
+
     public List<Product> getAllProducts() {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -44,7 +52,7 @@ public class ProductRepo {
 
         List<Product> productList = getAllProducts();
         productList = new ArrayList<>(productList);
-        product.setProductId((long) (productList.size() + 1));
+        product.setProductId((long) productList.get(productList.size() - 1).getProductId() + 1);
         productList.add(product);
 
         try {

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
@@ -24,6 +25,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepo productRepo;
+
+    @Override
+    public Product getProductById(Long id) {
+        Optional<Product> productOptional = productRepo.getProductById(id);
+
+        if (productOptional.isEmpty()) throw new NotFoundException("Product not found");
+
+        return productOptional.get();
+    }
 
     @Override
     public Product createProduct(Product product) {
@@ -44,9 +54,8 @@ public class ProductServiceImpl implements ProductService {
                 .filter(p -> p.getCategory().equalsIgnoreCase(category))
                 .collect(Collectors.toList());
 
-        if (products.isEmpty()) {
-            throw new NotFoundException("There are not any products in this category: " + category);
-        }
+        if (products.isEmpty()) throw new NotFoundException("There are not any products in this category: " + category);
+
 
         return products;
     }

@@ -14,18 +14,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Product {
     private Long productId;
-    @NotNull
+    @NotNull(message = "Name must not be null")
     private String name;
-    @NotNull
+    @NotNull(message = "Category must not be null")
     private String category;
-    @NotNull
+    @NotNull(message = "Brand must not be null")
     private String brand;
-    @NotNull
+    @NotNull(message = "Price must not be null")
     private BigDecimal price;
-    @NotNull
+    @NotNull(message = "Quantity must not be null")
     private Integer quantity;
-    @NotNull
+    @NotNull(message = "FreeShipping must not be null")
     private Boolean freeShipping;
-    @NotNull
+    @NotNull(message = "Prestige must not be null")
     private String prestige;
 }

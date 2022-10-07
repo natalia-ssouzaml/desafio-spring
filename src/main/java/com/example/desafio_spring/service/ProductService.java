@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ProductService {
 
+
+    Product getProductById(Long id);
     Product createProduct(Product product);
 
     /**

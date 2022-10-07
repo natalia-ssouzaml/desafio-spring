@@ -12,11 +12,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CustomerRepo {
 
     private final String linkFile = "src/main/resources/customers.json";
+
+
+    public Optional<Customer> getCustomerById(Long id) {
+        return getAllCustomers().stream()
+                .filter(c -> c.getCustomerId() == id)
+                .findFirst();
+    }
 
     /**
      * Método responsável por retornar uma lista com todos os clientes
@@ -45,7 +53,7 @@ public class CustomerRepo {
 
         List<Customer> customerList = getAllCustomers();
         customerList = new ArrayList<>(customerList);
-        customer.setCustomerId((long) (customerList.size() + 1));
+        customer.setCustomerId((long) customerList.get(customerList.size() - 1).getCustomerId() + 1);
         customerList.add(customer);
 
         try {
