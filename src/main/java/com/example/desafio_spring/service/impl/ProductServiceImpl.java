@@ -7,6 +7,7 @@ import com.example.desafio_spring.exception.InvalidQuantityException;
 import com.example.desafio_spring.exception.NotFoundException;
 import com.example.desafio_spring.model.Product;
 import com.example.desafio_spring.model.Purchase;
+import com.example.desafio_spring.repository.CustomerRepo;
 import com.example.desafio_spring.repository.ProductRepo;
 import com.example.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
 
+    @Autowired
+    private CustomerRepo customerRepo;
+
     @Override
     public Product getProductById(Long id) {
         Optional<Product> productOptional = productRepo.getProductById(id);
@@ -38,17 +42,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllProducts() {
+        return productRepo.getAllProducts();
+    }
+
+    @Override
     public Product createProduct(Product product) {
         if (product.getQuantity() < 1)
             throw new InvalidQuantityException("You have to insert at least one product");
         if (product.getPrice().compareTo(new BigDecimal(0)) < 0)
             throw new InvalidPriceException("Your product must not have a negative price");
         return productRepo.createProduct(product);
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return productRepo.getAllProducts();
     }
 
     @Override
@@ -102,6 +106,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Purchase purchaseItens(PurchaseRequest purchaseRequest) {
+        customerRepo.getAllCustomers().stream().filter(c -> c.getCustomerId().equals(purchaseRequest.getCustomerId())).findFirst().orElseThrow(() -> new NotFoundException("Customer not found"));
+
         Purchase purchase = new Purchase();
         List<Product> productList = getAllProducts();
         List<Product> productFoundList = productsVerification(purchaseRequest.getProductRequestList(), productList);

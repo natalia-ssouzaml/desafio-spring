@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +30,5 @@ public class Customer {
     @NotNull(message = "Password must not be null")
     @Size(min = 6, max = 12, message = "The password must be between 6 to 12 characters")
     private String password;
+    private List<Purchase> purchaseList;
 }

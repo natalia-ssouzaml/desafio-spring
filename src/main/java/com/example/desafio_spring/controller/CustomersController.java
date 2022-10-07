@@ -27,6 +27,12 @@ public class CustomersController {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/purchases")
+    public ResponseEntity<List<CustomerResponse>> getAllCustomersWithPurchaseList() {
+        return new ResponseEntity<>(CustomerResponse.convertListToResponse(customerService.getAllCustomerWithProducts()),
+                HttpStatus.OK);
+    }
+
     @GetMapping(path = "id/{id}")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable Long id) {
         return new ResponseEntity<>(CustomerResponse.convertToResponse(customerService.getCustomerById(id)),
