@@ -8,9 +8,9 @@ Uma plataforma de vendas de produtos online deseja melhorar as opções de pesqu
 filtragem de seus produtos; Para isso, decidiu implementar um motor de busca que, a
 partir das opções que o utilizador determina, devolve o(s) produto(s) que lhes
 corresponde. Obs: Os produtos devem ser cadastrados a partir de um payload e
-armazenados em um arquivo Json. Para isto, utilizem ObjectMapper.
+armazenados em um arquivo Json. Para isto, utilizem `ObjectMapper`.
 
-## Funcionalidades
+## :sparkles: Funcionalidades
 
 1. Cadastrar uma lista de produtos.
 2. Retornar uma lista de todos os produtos disponíveis
@@ -39,15 +39,18 @@ Ao mesmo tempo, é necessária uma API que forneça:
         - Se houver um problema com o servidor e a conexão não puder ser
           feita, o código de status correspondente deve ser retornado.
 
-## Autores
+## :busts_in_silhouette: Autores
 
 - [@heitorsguedes](https://www.github.com/heitorsguedes)
 - [@LucasVG97](https://www.github.com/LucasVG97)
-- [@matkat](https://www.github.com/matkaf)
+- [@matkaf](https://www.github.com/matkaf)
 - [@matheusbruder](https://www.github.com/matheusbruder)
 - [@natalia-ssouzaml](https://www.github.com/natalia-ssouzaml)
 
-## Documentação da API
+## :books: Documentação da API
+
+<details>
+    <summary><h3>Product endpoints</h3></summary>
 
 #### Retorna todos os produtos
 
@@ -79,49 +82,112 @@ Ao mesmo tempo, é necessária uma API que forneça:
   GET localhost:8080/products/freeShipping/category/{category}/{orderParam}
 ```
 
+| **Parâmetro de Ordenação** | **Descrição**                |
+|:---------------------------|:-----------------------------|
+| **asc**                    | Ordem alfabética crescente   |
+| **desc**                   | Ordem alfabética decrescente |
+| **lowprice**               | Preço mais baixo             |
+| **highprice**              | Preço mais alto              |
+
 #### Retorna os produtos por frete gratis e avaliação ordenado
 
 ```http
   GET localhost:8080/products/freeShipping/prestige/{prestige}/{orderParam}
 ```
 
+| **Parâmetro de Ordenação** | **Descrição**                |
+|:---------------------------|:-----------------------------|
+| **asc**                    | Ordem alfabética crescente   |
+| **desc**                   | Ordem alfabética decrescente |
+| **lowprice**               | Preço mais baixo             |
+| **highprice**              | Preço mais alto              |
+
 #### Retorna o produto que foi criado
 
 ```http
   POST localhost:8080/products
+```
 
-    @RequestBody
+**@RequestBody**
+
+```json
     {
-        "name": "Serra de fita",
-        "category": "Ferramentas",
-        "brand": "FORTGPRO",
-        "price": 2900.00,
-        "quantity": 3,
-        "freeShipping": false,
-        "prestige": "***"
-    }
+  "name": "Serra de fita",
+  "category": "Ferramentas",
+  "brand": "FORTGPRO",
+  "price": 2900.00,
+  "quantity": 3,
+  "freeShipping": false,
+  "prestige": "***"
+}
 ```
 
 #### Retorna o pedido de compra criado
 
 ```http
   POST localhost:8080/products/purchase
-
-    @RequestBody
-    [
-        {
-            "productId": 2,
-            "name": "Furadeira",
-            "quantity": 7
-        },
-        {
-            "productId": 1,
-            "name": "Serra de Bancada",
-            "quantity": 5
-        }
-    ]
 ```
 
-### Arquivo documentação 
+**@RequestBody**
 
-- [Collection (endpoints)](endpoints-collection.har)
+```json
+    [
+  {
+    "productId": 2,
+    "name": "Furadeira",
+    "quantity": 7
+  },
+  {
+    "productId": 1,
+    "name": "Serra de Bancada",
+    "quantity": 5
+  }
+]
+```
+
+</details>
+<details>
+    <summary><h3>Customers endpoints</h3></summary>
+
+#### Retorna todos os clientes
+
+```http
+  GET localhost:8080/customers
+```
+
+#### Retorna o cliente com o id especificado
+
+```http
+  GET localhost:8080/customers/id/{id}
+```
+
+#### Retorna todos os clientes do estado
+
+```http
+  GET localhost:8080/customers/{state}
+```
+
+#### Retorna o cliente que acabou de ser contratado
+
+```http
+  POST localhost:8080/customers
+```
+
+**@RequestBody**
+
+```json
+    {
+      "name": "Cristiano Ronaldo",
+      "cpf": "38609867544",
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "email": "cr7@gmail.com",
+      "password": "messiehruim"
+    }
+```
+
+</details>
+
+## :file_folder: Download Endpoints
+
+- [Collection (endpoints)](/DesafioSpring.postman_collection.json)
