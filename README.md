@@ -7,7 +7,7 @@
 Uma plataforma de vendas de produtos online deseja melhorar as opções de pesquisa e
 filtragem de seus produtos; Para isso, decidiu implementar um motor de busca que, a
 partir das opções que o utilizador determina, devolve o(s) produto(s) que lhes
-corresponde. Obs: Os produtos devem ser cadastrados a partir de um payload e
+corresponde. Obs.: Os produtos devem ser cadastrados a partir de um payload e
 armazenados em um arquivo Json. Para isto, utilizem `ObjectMapper`.
 
 ## :sparkles: Funcionalidades
@@ -58,6 +58,12 @@ Ao mesmo tempo, é necessária uma API que forneça:
   GET localhost:8080/products
 ```
 
+#### Retorna o produto com o id especificado
+
+```http
+  GET localhost:8080/products/id/{id}
+```
+
 #### Retorna todos os produtos da categoria
 
 ```http
@@ -68,12 +74,6 @@ Ao mesmo tempo, é necessária uma API que forneça:
 
 ```http
   GET localhost:8080/products/freeShipping/category/{category}
-```
-
-#### Retorna os produtos com frete grátis dada uma avaliação
-
-```http
-  GET localhost:8080/products/freeShipping/{prestige}
 ```
 
 #### Retorna os produtos por frete gratis e categoria ordenado
@@ -88,6 +88,12 @@ Ao mesmo tempo, é necessária uma API que forneça:
 | **desc**                   | Ordem alfabética decrescente |
 | **lowprice**               | Preço mais baixo             |
 | **highprice**              | Preço mais alto              |
+
+#### Retorna os produtos com frete grátis dada uma avaliação
+
+```http
+  GET localhost:8080/products/freeShipping/{prestige}
+```
 
 #### Retorna os produtos por frete gratis e avaliação ordenado
 
@@ -108,41 +114,42 @@ Ao mesmo tempo, é necessária uma API que forneça:
   POST localhost:8080/products
 ```
 
-**@RequestBody**
+###### **@RequestBody**
 
 ```json
-    {
-  "name": "Serra de fita",
+{
+  "name": "Serra copo",
   "category": "Ferramentas",
   "brand": "FORTGPRO",
   "price": 2900.00,
-  "quantity": 3,
+  "quantity": 2,
   "freeShipping": false,
   "prestige": "***"
 }
 ```
 
-#### Retorna o pedido de compra criado
+#### Retorna o pedido de compra criado com total
 
 ```http
   POST localhost:8080/products/purchase
 ```
 
-**@RequestBody**
+###### **@RequestBody**
 
 ```json
-    [
-  {
-    "productId": 2,
-    "name": "Furadeira",
-    "quantity": 7
-  },
-  {
-    "productId": 1,
-    "name": "Serra de Bancada",
-    "quantity": 5
-  }
-]
+{
+  "productRequestList": [
+    {
+      "productId": 2,
+      "quantity": 7
+    },
+    {
+      "productId": 3,
+      "quantity": 5
+    }
+  ],
+  "customerId": 2
+}
 ```
 
 </details>
@@ -167,23 +174,29 @@ Ao mesmo tempo, é necessária uma API que forneça:
   GET localhost:8080/customers/{state}
 ```
 
+#### Retorna todos os clientes com suas respectivas compras
+
+```http
+  GET localhost:8080/customers/purchases
+```
+
 #### Retorna o cliente que acabou de ser contratado
 
 ```http
   POST localhost:8080/customers
 ```
 
-**@RequestBody**
+###### **@RequestBody**
 
 ```json
-    {
-      "name": "Cristiano Ronaldo",
-      "cpf": "38609867544",
-      "city": "Belo Horizonte",
-      "state": "MG",
-      "email": "cr7@gmail.com",
-      "password": "messiehruim"
-    }
+{
+  "name": "Cristiano Ronaldo",
+  "cpf": "38609867544",
+  "city": "Belo Horizonte",
+  "state": "MG",
+  "email": "cr7@gmail.com",
+  "password": "messiehruim"
+}
 ```
 
 </details>
